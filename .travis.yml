@@ -6,15 +6,15 @@ script:
 # prepare qemu
 - docker run --rm --privileged multiarch/qemu-user-static:register --reset
 # build image
-- docker build -t hypriot/rpi-mysql .
+- docker build -t philipz/rpi-mysql .
 # test image
-- docker run hypriot/rpi-mysql mysql --version
+- docker run philipz/rpi-mysql mysql --version
 # push image
 - >
   if [ "$TRAVIS_BRANCH" == "master" ]; then
     docker login -u="$DOCKER_USER" -p="$DOCKER_PASS"
     TAG=$(grep "ENV MYSQL_VERSION" Dockerfile | awk 'NF>1{print $NF}')
-    docker tag hypriot/rpi-mysql hypriot/rpi-mysql:$TAG
-    docker push hypriot/rpi-mysql:$TAG
-    docker push hypriot/rpi-mysql
+    docker tag philipz/rpi-mysql philipz/rpi-mysql:$TAG
+    docker push philipz/rpi-mysql:$TAG
+    docker push philipz/rpi-mysql
   fi
